@@ -9,8 +9,7 @@ ENV INITSYSTEM on
 WORKDIR /go/src/github.com/trinitronx/gobot-led-test
 COPY . ./
 RUN go get -d -u gobot.io/x/gobot && go get -d -u gobot.io/x/gobot/drivers/gpio && \
-    go get -d -u gobot.io/x/gobot/platforms/intel-iot/edison && \
-    go get -d -u gobot.io/x/gobot/platforms/firmata
+    go get -d -u gobot.io/x/gobot/platforms/intel-iot/edison
 RUN GOARCH=386 GOOS=linux go build ./main.go
 
 CMD [ "./main" ]

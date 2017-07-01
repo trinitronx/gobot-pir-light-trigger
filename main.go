@@ -5,14 +5,15 @@ import (
 
    "gobot.io/x/gobot"
    "gobot.io/x/gobot/drivers/gpio"
-   "gobot.io/x/gobot/platforms/firmata"
+   "gobot.io/x/gobot/platforms/intel-iot/edison"
 )
 
 func main() {
-   firmataAdaptor := firmata.NewAdaptor("/dev/ttyACM0")
+   e := edison.NewAdaptor()
 
-   sensor := gpio.NewPIRMotionDriver(firmataAdaptor, "5")
-   led := gpio.NewLedDriver(firmataAdaptor, "13")
+   // Was 5
+   sensor := gpio.NewPIRMotionDriver(e, "7")
+   led := gpio.NewLedDriver(e, "13")
 
    work := func() {
       sensor.On(gpio.MotionDetected, func(data interface{}) {
@@ -26,7 +27,7 @@ func main() {
    }
 
    robot := gobot.NewRobot("motionBot",
-      []gobot.Connection{firmataAdaptor},
+      []gobot.Connection{e},
       []gobot.Device{sensor, led},
       work,
    )
